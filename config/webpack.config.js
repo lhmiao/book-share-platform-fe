@@ -517,7 +517,7 @@ module.exports = function(webpackEnv) {
                   modifyVars: {
                     '@font-size-base': '12px',
                     '@border-radius-base': '2px',
-                  }
+                  },
                 },
               ),
               // Don't consider CSS imports dead code even if the
@@ -543,7 +543,7 @@ module.exports = function(webpackEnv) {
                   modifyVars: {
                     '@font-size-base': '12px',
                     '@border-radius-base': '2px',
-                  }
+                  },
                 },
               ),
             },

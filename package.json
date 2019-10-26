@@ -148,6 +148,6 @@
     }
   },
   "lint-staged": {
-    "**/*.js?(x)": "eslint --fix"
+    "**/*.js?(x)": ["eslint --fix", "git add"]
   }
 }
