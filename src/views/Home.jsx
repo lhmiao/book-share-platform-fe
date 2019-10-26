@@ -7,5 +7,5 @@ export default function Home(props) {
       <p>hot loader test <span>less</span></p>
       <Input />
     </Fragment>
-  )
+  );
 }
