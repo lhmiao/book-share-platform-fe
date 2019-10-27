@@ -149,5 +149,6 @@
   },
   "lint-staged": {
     "**/*.js?(x)": ["eslint --fix", "git add"]
-  }
+  },
+  "proxy": "http://127.0.0.1:6000"
 }

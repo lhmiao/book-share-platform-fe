@@ -16,12 +16,13 @@ export default class Client {
     const client = axios.create(options);
     client.interceptors.response.use(
       (res) => {
-        const { status, data, config } = res;
+        console.log(res);
+        const { data, config } = res;
         if (data.code !== 0) {
           const { useErrorTip = true } = config;
           if (useErrorTip) {
-            notification.open({
-              message: status,
+            notification.error({
+              message: data.code,
               description: data.message,
             });
           }
@@ -30,21 +31,23 @@ export default class Client {
         return Promise.resolve(data.data);
       },
       (error) => {
-        const { status, data, config, statusText } = error;
+        debugger;
+        const { response: { status, statusText }, config } = error;
         const { useErrorTip = true } = config;
         const reject = {
           code: status,
-          message: data.message || statusText,
+          message: statusText,
         };
         if (useErrorTip) {
-          notification.open({
+          notification.error({
             message: status,
-            description: reject.message,
+            description: statusText,
           });
         }
         return Promise.reject(reject);
       }
     );
+    return client;
   }
 
   get(url, params, config = {}) {

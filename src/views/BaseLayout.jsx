@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Home from './Home';
 
 const Container = styled.div`
-  width: 200px;
+  width: 300px;
   margin: 100px auto;
 `;
 
