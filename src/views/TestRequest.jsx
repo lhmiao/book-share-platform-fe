@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Input, Button, message } from 'antd';
 import * as api from 'apis/test';
 
-export default function Home(props) {
+export default function TestRequest(props) {
   const [value, setValue] = useState('');
 
   async function testGet() {

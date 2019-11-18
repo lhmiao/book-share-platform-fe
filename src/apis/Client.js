@@ -16,7 +16,6 @@ export default class Client {
     const client = axios.create(options);
     client.interceptors.response.use(
       (res) => {
-        console.log(res);
         const { data, config } = res;
         if (data.code !== 0) {
           const { useErrorTip = true } = config;
@@ -31,7 +30,6 @@ export default class Client {
         return Promise.resolve(data.data);
       },
       (error) => {
-        debugger;
         const { response: { status, statusText }, config } = error;
         const { useErrorTip = true } = config;
         const reject = {
