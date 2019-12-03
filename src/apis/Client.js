@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { notification } from 'antd';
+import { getCsrfToken, isCsrfSafeMethod } from '../utils';
 
 const clientOpts = {
   baseURL: '',
@@ -14,6 +15,14 @@ export default class Client {
 
   getAxiosClient(options) {
     const client = axios.create(options);
+    client.interceptors.request.use((config) => {
+      const { method } = config;
+      if (!isCsrfSafeMethod(method)) {
+        const csrfToken = getCsrfToken();
+        csrfToken && (config.headers['x-csrf-token'] = csrfToken); 
+      }
+      return Promise.resolve(config);
+    });
     client.interceptors.response.use(
       (res) => {
         const { data, config } = res;
