@@ -51,8 +51,8 @@ export default class Home extends PureComponent {
     const params = {
       searchKey: '',
       searchValue: '',
-      page,
-      page_size,
+      page: Number(page),
+      page_size: Number(page_size),
     };
     for (const [key, value] of Object.entries(rest)) {
       if (QUERY_TYPE.includes(key)) {
