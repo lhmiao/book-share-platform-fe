@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { css } from 'emotion';
-import Login from './Login';
+import HeaderAction from 'components/HeaderAction';
 
 const { Header: AntdHeader } = Layout;
 
@@ -17,7 +17,7 @@ export default function Header(props) {
   return (
     <AntdHeader>
       <div className={logoClass} />
-      <Login />
+      <HeaderAction />
     </AntdHeader>
   );
 }
