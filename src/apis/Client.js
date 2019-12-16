@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { getCsrfToken, isCsrfSafeMethod } from '../utils';
 
 const clientOpts = {
-  baseURL: '',
+  baseURL: '/api/v1',
   timeout: 10000,
 };
 
