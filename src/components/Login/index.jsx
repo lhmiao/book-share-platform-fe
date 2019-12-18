@@ -85,6 +85,8 @@ export default class Login extends PureComponent {
     }
   }
 
+  handleKeyDown = e => e.key === 'Enter' && this.onOk()
+
   getTitle() {
     const { mode } = this.state;
 
@@ -170,8 +172,10 @@ export default class Login extends PureComponent {
           width={450}
           afterClose={this.resetForm}
         >
-          {this.buildContent()}
-          {this.buildTip()}
+          <div onKeyDown={this.handleKeyDown}>
+            {this.buildContent()}
+            {this.buildTip()}
+          </div>
         </Modal>
       </Fragment>
     );
