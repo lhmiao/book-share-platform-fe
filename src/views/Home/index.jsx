@@ -90,12 +90,14 @@ export default class Home extends PureComponent {
   }
 
   render() {
+    const { history } = this.props;
     const { params } = this.state;
 
     return (
       <Fragment>
         <Filter
           params={params}
+          history={history}
           onParamsChange={this.onParamsChange}
           fetchBookList={this.fetchBookList}
         />

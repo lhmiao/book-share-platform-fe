@@ -4,7 +4,7 @@ import { Input, Checkbox, Button } from 'antd';
 const { Search } = Input;
 
 export default function Filter(props) {
-  const { params, onParamsChange, fetchBookList } = props;
+  const { params, onParamsChange, fetchBookList, history } = props;
 
   return (
     <Fragment>
@@ -23,6 +23,7 @@ export default function Filter(props) {
       <Button
         type="primary"
         style={{ float: 'right' }}
+        onClick={() => history.push('/book/create')}
       >我也要分享</Button>
     </Fragment>
   );
