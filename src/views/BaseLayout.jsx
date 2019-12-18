@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-// import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import styled from '@emotion/styled';
 import { css } from 'emotion';
@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { setUserInfo } from 'actions/user';
 import Header from 'components/Header';
 import * as userApi from 'apis/user';
+import User from './User';
 
 const { Content } = Layout;
 
@@ -65,8 +66,13 @@ export default class BaseLayout extends PureComponent {
         <Header />
         <Content style={{ padding: 30 }}>
           <Container>
-            {/* <Switch>
-            </Switch> */}
+            <Switch>
+              <Route
+                exact
+                path="/user"
+                component={User}
+              />
+            </Switch>
           </Container>
         </Content>
       </Layout>

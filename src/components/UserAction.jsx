@@ -22,13 +22,14 @@ function UserAction(props) {
       await api.logout();
       clearUserInfo();
       message.success('当前账号已登出');
+      history.replace('/');
     } catch (error) {
       console.error(error);
     }
   }
 
   function toUserInfoPage() {
-    history.push(`/user/${userInfo.id}`);
+    history.push('/user');
   }
 
   const menu = (
