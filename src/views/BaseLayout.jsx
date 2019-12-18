@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import styled from '@emotion/styled';
 import { css } from 'emotion';
@@ -8,7 +8,9 @@ import { bindActionCreators } from 'redux';
 import { setUserInfo } from 'actions/user';
 import Header from 'components/Header';
 import * as userApi from 'apis/user';
+import { HOME_PATH } from '@/constant';
 import User from './User';
+import Home from './Home';
 
 const { Content } = Layout;
 
@@ -67,6 +69,16 @@ export default class BaseLayout extends PureComponent {
         <Content style={{ padding: 30 }}>
           <Container>
             <Switch>
+              <Redirect
+                exact
+                from="/"
+                to={HOME_PATH}
+              />
+              <Route
+                exact
+                path={HOME_PATH}
+                component={Home}
+              />
               <Route
                 exact
                 path="/user"

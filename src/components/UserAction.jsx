@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Avatar, Menu, Dropdown, Icon, message } from 'antd';
 import * as api from 'apis/user';
 import { clearUserInfo } from 'actions/user';
+import { HOME_PATH } from '@/constant';
 
 const { Item: MenuItem } = Menu;
 
@@ -22,7 +23,7 @@ function UserAction(props) {
       await api.logout();
       clearUserInfo();
       message.success('当前账号已登出');
-      history.replace('/');
+      history.replace(HOME_PATH);
     } catch (error) {
       console.error(error);
     }

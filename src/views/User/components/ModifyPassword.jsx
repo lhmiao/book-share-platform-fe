@@ -6,6 +6,7 @@ import ModifyPasswordForm from 'components/ModifyPasswordForm';
 import { Button, message } from 'antd';
 import { clearUserInfo } from 'actions/user';
 import * as api from 'apis/user';
+import { HOME_PATH } from '@/constant';
 
 function ModifyPassword(props) {
   const { history, clearUserInfo } = props;
@@ -23,7 +24,7 @@ function ModifyPassword(props) {
     try {
       const params = await validateForm();
       await api.modifyPassword(params);
-      history.replace('/');
+      history.replace(HOME_PATH);
       clearUserInfo();
       message.success('修改密码成功，请重新登录');
     } catch (error) {

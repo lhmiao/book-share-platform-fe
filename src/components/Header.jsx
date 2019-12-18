@@ -6,17 +6,19 @@ import HeaderAction from 'components/HeaderAction';
 const { Header: AntdHeader } = Layout;
 
 const logoClass = css`
-  float: left;
-  width: 120px;
+  display: inline-block;
   height: 31px;
   margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.2);
+  line-height: 31px;
+  font-size: 24px;
+  font-style: italic;
+  color: #fff;
 `;
 
 export default function Header(props) {
   return (
     <AntdHeader>
-      <div className={logoClass} />
+      <span className={logoClass}>book share</span>
       <HeaderAction />
     </AntdHeader>
   );
