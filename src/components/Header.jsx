@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
+import { Link } from 'react-router-dom';
 import { css } from 'emotion';
 import HeaderAction from 'components/HeaderAction';
 
@@ -18,7 +19,7 @@ const logoClass = css`
 export default function Header(props) {
   return (
     <AntdHeader>
-      <span className={logoClass}>book share</span>
+      <Link to="/" className={logoClass}>book share</Link>
       <HeaderAction />
     </AntdHeader>
   );
