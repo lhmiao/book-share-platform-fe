@@ -11,6 +11,7 @@ import * as userApi from 'apis/user';
 import { HOME_PATH } from '@/constant';
 import User from './User';
 import Home from './Home';
+import CreateBook from './CreateBook';
 
 const { Content } = Layout;
 
@@ -83,6 +84,11 @@ export default class BaseLayout extends PureComponent {
                 exact
                 path="/user"
                 component={User}
+              />
+              <Route
+                exact
+                path="/book/create"
+                component={CreateBook}
               />
             </Switch>
           </Container>

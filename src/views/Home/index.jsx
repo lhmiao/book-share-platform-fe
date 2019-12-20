@@ -1,10 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import { List } from 'antd';
 import * as api from 'apis/book';
 import Filter from './components/Filter';
 
 const { Item: ListItem } = List;
+const { Meta: ListItemMeta } = ListItem;
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -80,12 +82,33 @@ export default class Home extends PureComponent {
       },
     };
 
+    const renderItem = item => {
+      const { id, bookName, intro, onSell } = item;
+      return (
+        <ListItem
+          // actions={[<Link>详情</Link>]}
+        >
+          <ListItemMeta
+            avatar={<img style={{ width: 160 }} alt="图书预览图" src={`/book/${id}/preview`} />}
+            title={bookName}
+            description={intro}
+          />
+          {/* <div>content</div> */}
+        </ListItem>
+      );
+    };
+
     return (
-      <List
-        loading={loading}
-        dataSource={bookList}
-        pagination={pagination}
-      />
+      <div style={{ marginTop: 20 }}>
+        <List
+          loading={loading}
+          grid={{ gutter: 16, column: 2 }}
+          dataSource={bookList}
+          renderItem={renderItem}
+          pagination={pagination}
+          itemLayout="horizontal"
+        />
+      </div>
     );
   }
 
