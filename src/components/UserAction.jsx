@@ -21,9 +21,9 @@ function UserAction(props) {
   async function logout() {
     try {
       await api.logout();
+      history.replace(HOME_PATH);
       clearUserInfo();
       message.success('当前账号已登出');
-      history.replace(HOME_PATH);
     } catch (error) {
       console.error(error);
     }
