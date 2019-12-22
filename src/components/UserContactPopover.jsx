@@ -20,7 +20,7 @@ const ContactItemContainer = styled.div`
 `;
 
 const ContactItem = ({ label, children }) => {
-  // if (!children) return null;
+  if (!children) return null;
 
   const copyContact = () => {
     let input = document.createElement('input');
