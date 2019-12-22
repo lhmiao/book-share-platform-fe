@@ -1,12 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import queryString from 'query-string';
-import { List } from 'antd';
 import * as api from 'apis/book';
 import Filter from './components/Filter';
-
-const { Item: ListItem } = List;
-const { Meta: ListItemMeta } = ListItem;
+import BookList from 'components/BookList';
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -65,56 +61,9 @@ export default class Home extends PureComponent {
 
   onPageChange = (page, pageSize) => this.onParamsChange({ page: page || 1, pageSize }, true)
 
-  buildList() {
-    const { bookList, total, params, loading } = this.state;
-
-    const pagination = {
-      current: params.page,
-      pageSize: params.pageSize,
-      pageSizeOptions: ['10', '20', '30', '50'],
-      total,
-      showSizeChanger: true,
-      size: 'small',
-      onChange: this.onPageChange,
-      onShowSizeChange: this.onPageChange,
-      showTotal(total) {
-        return `共${total}本图书`;
-      },
-    };
-
-    const renderItem = item => {
-      const { id, bookName, intro, onSell } = item;
-      return (
-        <ListItem
-          // actions={[<Link>详情</Link>]}
-        >
-          <ListItemMeta
-            avatar={<img style={{ width: 160 }} alt="图书预览图" src={`/book/${id}/preview`} />}
-            title={bookName}
-            description={intro}
-          />
-          {/* <div>content</div> */}
-        </ListItem>
-      );
-    };
-
-    return (
-      <div style={{ marginTop: 20 }}>
-        <List
-          loading={loading}
-          grid={{ gutter: 16, column: 2 }}
-          dataSource={bookList}
-          renderItem={renderItem}
-          pagination={pagination}
-          itemLayout="horizontal"
-        />
-      </div>
-    );
-  }
-
   render() {
     const { history } = this.props;
-    const { params } = this.state;
+    const { params, bookList, total, loading } = this.state;
 
     return (
       <Fragment>
@@ -124,7 +73,15 @@ export default class Home extends PureComponent {
           onParamsChange={this.onParamsChange}
           fetchBookList={this.fetchBookList}
         />
-        {this.buildList()}
+        <BookList
+          data={bookList}
+          total={total}
+          loading={loading}
+          page={params.page}
+          pageSize={params.pageSize}
+          onPageChange={this.onPageChange}
+          style={{ marginTop: 24 }}
+        />
       </Fragment>
     );
   }
