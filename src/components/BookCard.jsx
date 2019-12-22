@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { Card, Typography, Tooltip, Icon } from 'antd';
 import { css } from 'emotion';
+import { Link } from 'react-router-dom';
 import UserContactPopover from 'components/UserContactPopover';
+import { getBookPreviewSrc } from '@/utils';
+import BookPrice from 'components/BookPrice';
 
 const { Meta: CardMeta } = Card;
 const { Paragraph } = Typography;
@@ -16,21 +19,12 @@ const bookCardDefaultClass = css`
     height: 36px;
     color: rgba(0, 0, 0, .45);
   }
-
-  .book-price {
-    color: #fa541c;
-    font-weight: bold;
-    font-size: 15px;
-
-    &::before {
-      content: "¥";
-    }
-  }
 `;
 
 export default function BookCard(props) {
   const {
     id, bookName, intro, author, price, className, style, keeper,
+    onSell, showActions, ...restProps
   } = props;
 
   const description = (
@@ -47,7 +41,7 @@ export default function BookCard(props) {
   );
 
   const sellerInfo = (
-    <UserContactPopover {...keeper}>
+    <UserContactPopover {...keeper} title="联系卖家">
       <Icon type="user" />
     </UserContactPopover>
   );
@@ -60,23 +54,28 @@ export default function BookCard(props) {
 
   const detailInfo = (
     <Tooltip title="查看详情">
-      <Icon type="file-text" />
+      <Link to={`/book/${id}`}>
+        <Icon type="file-text" />
+      </Link>
     </Tooltip>
   );
+
+  const bookPreviewSrc = getBookPreviewSrc(id);
 
   return (
     <Card
       hoverable
       style={style}
       className={`${bookCardDefaultClass} ${className}`}
-      cover={<img alt="图书预览图" src={`/book/${id}/preview`} />}
-      actions={[sellerInfo, buyBtn, detailInfo]}
+      cover={<img alt="图书预览图" src={bookPreviewSrc} />}
+      actions={showActions ? [sellerInfo, buyBtn, detailInfo] : null}
+      {...restProps}
     >
       <CardMeta
         title={bookName}
         description={description}
       />
-      <div className="book-price">{price}</div>
+      <BookPrice onSell={onSell}>{price}</BookPrice>
     </Card>
   );
 }
@@ -87,4 +86,6 @@ BookCard.defaultProps = {
   author: '',
   price: 0,
   keeper: {},
+  onSell: false,
+  showActions: true,
 };

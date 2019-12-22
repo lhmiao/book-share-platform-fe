@@ -8,7 +8,7 @@ import * as api from 'apis/user';
 const { Item: FormItem } = Form;
 
 function Info(props) {
-  const { userInfo, form, setUserInfo } = props;
+  const { loginUser, form, setUserInfo } = props;
   const { getFieldDecorator } = form;
 
   function validateForm() {
@@ -22,8 +22,8 @@ function Info(props) {
   async function onSave() {
     try {
       const params = await validateForm();
-      const userInfo = await api.modifyUserInfo(params);
-      setUserInfo(userInfo);
+      const loginUser = await api.modifyUserInfo(params);
+      setUserInfo(loginUser);
       message.success('修改成功');
     } catch (error) {
       console.error(error);
@@ -34,7 +34,7 @@ function Info(props) {
     <div>
       <FormItem label="用户名">
         {getFieldDecorator('username', {
-          initialValue: userInfo?.username,
+          initialValue: loginUser?.username,
           rules: [{ required: true, message: '请输入用户名' }],
         })(
           <Input placeholder="请输入用户名" />
@@ -42,7 +42,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="电话号码">
         {getFieldDecorator('phone', {
-          initialValue: userInfo?.phone,
+          initialValue: loginUser?.phone,
           rules: [{
             validator(rule, value, callback) {
               const qq = form.getFieldValue('qq');
@@ -60,7 +60,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="QQ号码">
         {getFieldDecorator('qq', {
-          initialValue: userInfo?.qq,
+          initialValue: loginUser?.qq,
           rules: [{
             validator(rule, value, callback) {
               const phone = form.getFieldValue('phone');
@@ -78,7 +78,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="微信号码">
         {getFieldDecorator('wechat', {
-          initialValue: userInfo?.wechat,
+          initialValue: loginUser?.wechat,
           rules: [{
             validator(rule, value, callback) {
               const phone = form.getFieldValue('phone');
@@ -94,23 +94,23 @@ function Info(props) {
           <Input placeholder="请输入微信号码" />
         )}
       </FormItem>
-      <div style={{ textAlign: 'right' }}>
-        <Button
-          onClick={() => form.resetFields()}
-        >重置</Button>
-        <Button
-          type="primary"
-          onClick={onSave}
-          style={{ marginLeft: 10 }}
-        >保存</Button>
-      </div>
+      <Button
+        onClick={() => form.resetFields()}
+      >重置</Button>
+      <Button
+        type="primary"
+        onClick={onSave}
+        style={{ marginLeft: 10 }}
+      >保存</Button>
     </div>
   );
 }
 
 export default compose(
-  connect(null, dispatch => ({
-    setUserInfo: bindActionCreators(setUserInfo, dispatch),
-  })),
+  connect(
+    state => ({ loginUser: state.User }),
+    dispatch => ({
+      setUserInfo: bindActionCreators(setUserInfo, dispatch),
+    })),
   Form.create()
 )(Info);

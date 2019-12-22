@@ -12,6 +12,7 @@ import { HOME_PATH } from '@/constant';
 import User from './User';
 import Home from './Home';
 import CreateBook from './CreateBook';
+import BookDetail from './BookDetail';
 
 const { Content } = Layout;
 
@@ -44,8 +45,8 @@ export default class BaseLayout extends PureComponent {
   async checkLogin() {
     try {
       const { setUserInfo } = this.props;
-      const userInfo = await userApi.checkLogin();
-      setUserInfo(userInfo);
+      const loginUser = await userApi.checkLogin();
+      setUserInfo(loginUser);
     } catch (error) {
       console.error(error);
     } finally {
@@ -89,7 +90,11 @@ export default class BaseLayout extends PureComponent {
                 exact
                 path="/book/create"
                 component={CreateBook}
-              />
+              /><Route
+              exact
+              path="/book/:bookId"
+              component={BookDetail}
+            />
             </Switch>
           </Container>
         </Content>

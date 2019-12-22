@@ -8,4 +8,6 @@ export const getCsrfToken = (key = 'csrfToken') => {
   return undefined;
 };
 
-export const isCsrfSafeMethod = (method) => /^(get|head|options|trace)$/.test(method.toLowerCase());
+export const isCsrfSafeMethod = method => /^(get|head|options|trace)$/.test(method.toLowerCase());
+
+export const getBookPreviewSrc = bookId => `/book/${bookId}/preview`;

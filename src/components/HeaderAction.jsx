@@ -5,11 +5,11 @@ import Login from 'components/Login';
 import UserAction from 'components/UserAction';
 
 function HeaderAction(props) {
-  const { userInfo } = props;
+  const { loginUser } = props;
 
   return (
     <div style={{ float: 'right' }}>
-      {userInfo
+      {loginUser
         ? <UserAction />
         : (
           <Login>
@@ -23,4 +23,4 @@ function HeaderAction(props) {
   );
 }
 
-export default connect(state => ({ userInfo: state.user }))(HeaderAction);
+export default connect(state => ({ loginUser: state.user }))(HeaderAction);

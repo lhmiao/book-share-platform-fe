@@ -9,10 +9,10 @@ const { Item: FormItem } = Form;
 const { Password } = Input;
 
 function ModifyPasswordForm(props) {
-  const { userInfo, form } = props;
+  const { loginUser, form } = props;
   const { getFieldDecorator } = form;
 
-  const [securityQuestion, setSecurityQuestion] = useState(userInfo && userInfo.securityQuestion);
+  const [securityQuestion, setSecurityQuestion] = useState(loginUser && loginUser.securityQuestion);
 
   function validateUsername() {
     return new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ function ModifyPasswordForm(props) {
 
   return (
     <Fragment>
-      {!userInfo && (
+      {!loginUser && (
         <FormItem>
           {getFieldDecorator('username', {
             initialValue: '',
@@ -74,5 +74,5 @@ function ModifyPasswordForm(props) {
 
 export default compose(
   Form.create(),
-  connect(state => ({ userInfo: state.user })),
+  connect(state => ({ loginUser: state.user })),
 )(ModifyPasswordForm);

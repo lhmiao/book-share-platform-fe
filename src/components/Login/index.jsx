@@ -10,7 +10,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 @connect(
-  state => ({ userInfo: state.user }),
+  state => ({ loginUser: state.user }),
   dispatch => ({
     setUserInfo: bindActionCreators(setUserInfo, dispatch),
     clearUserInfo: bindActionCreators(clearUserInfo, dispatch),
@@ -65,13 +65,13 @@ export default class Login extends PureComponent {
       const { setUserInfo, clearUserInfo } = this.props;
       const { mode } = this.state;
       if (mode === 'login') {
-        const userInfo = await api.login(params);
-        setUserInfo(userInfo);
+        const loginUser = await api.login(params);
+        setUserInfo(loginUser);
         message.success('登录成功');
         this.closeModal();
       } else if (mode === 'register') {
-        const userInfo = await api.register(params);
-        setUserInfo(userInfo);
+        const loginUser = await api.register(params);
+        setUserInfo(loginUser);
         message.success('注册成功，已使用注册账号登录');
         this.closeModal();
       } else if (mode === 'modifyPassword') {

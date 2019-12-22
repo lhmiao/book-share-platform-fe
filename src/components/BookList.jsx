@@ -46,6 +46,7 @@ export default function BookList(props) {
 
     return data.map(item => (
       <BookCard
+        key={item.id}
         className="book-list-card"
         {...item}
       />

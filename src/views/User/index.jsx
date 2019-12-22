@@ -1,18 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Tabs } from 'antd';
-import Info from './components/Info';
+import UserInfo from './components/UserInfo';
 import ModifyPassword from './components/ModifyPassword';
 
 const { TabPane } = Tabs;
 
-function User(props) {
-  const { userInfo } = props;
-
+export default function User(props) {
   return (
     <Tabs>
       <TabPane tab="个人信息" key="userInfo">
-        <Info userInfo={userInfo} />
+        <UserInfo />
       </TabPane>
       <TabPane tab="修改密码" key="modifyPassword">
           <ModifyPassword />
@@ -21,6 +18,3 @@ function User(props) {
   );
 
 }
-
-export default connect(state => ({ userInfo: state.user }))(User);
-

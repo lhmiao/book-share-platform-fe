@@ -47,7 +47,7 @@ const ContactItem = ({ label, children }) => {
 };
 
 export default function UserContactPopover(props) {
-  const { phone, qq, wechat, children, placement } = props;
+  const { phone, qq, wechat, children, placement, title } = props;
 
   const content = (
     <Fragment>
@@ -66,7 +66,7 @@ export default function UserContactPopover(props) {
 
   return (
     <Popover
-      title="联系卖家"
+      title={title}
       content={content}
       placement={placement}
     >
@@ -77,4 +77,5 @@ export default function UserContactPopover(props) {
 
 UserContactPopover.defaultProps = {
   placement: 'top',
+  title: null,
 };

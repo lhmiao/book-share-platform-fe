@@ -35,12 +35,10 @@ function ModifyPassword(props) {
   return (
     <Fragment>
       <ModifyPasswordForm ref={formRef} />
-      <div style={{ textAlign: 'right' }}>
-        <Button
-          type="primary"
-          onClick={onConfirm}
-        >确定</Button>
-      </div>
+      <Button
+        type="primary"
+        onClick={onConfirm}
+      >确定</Button>
     </Fragment>
   );
 }
