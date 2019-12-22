@@ -34,7 +34,7 @@ function Info(props) {
     <div>
       <FormItem label="用户名">
         {getFieldDecorator('username', {
-          initialValue: userInfo.username,
+          initialValue: userInfo?.username,
           rules: [{ required: true, message: '请输入用户名' }],
         })(
           <Input placeholder="请输入用户名" />
@@ -42,7 +42,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="电话号码">
         {getFieldDecorator('phone', {
-          initialValue: userInfo.phone,
+          initialValue: userInfo?.phone,
           rules: [{
             validator(rule, value, callback) {
               const qq = form.getFieldValue('qq');
@@ -60,7 +60,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="QQ号码">
         {getFieldDecorator('qq', {
-          initialValue: userInfo.qq,
+          initialValue: userInfo?.qq,
           rules: [{
             validator(rule, value, callback) {
               const phone = form.getFieldValue('phone');
@@ -78,7 +78,7 @@ function Info(props) {
       </FormItem>
       <FormItem label="微信号码">
         {getFieldDecorator('wechat', {
-          initialValue: userInfo.wechat,
+          initialValue: userInfo?.wechat,
           rules: [{
             validator(rule, value, callback) {
               const phone = form.getFieldValue('phone');
