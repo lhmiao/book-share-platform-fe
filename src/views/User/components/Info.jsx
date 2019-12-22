@@ -43,20 +43,53 @@ function Info(props) {
       <FormItem label="电话号码">
         {getFieldDecorator('phone', {
           initialValue: userInfo.phone,
+          rules: [{
+            validator(rule, value, callback) {
+              const qq = form.getFieldValue('qq');
+              const wechat = form.getFieldValue('wechat');
+              if (value || qq || wechat) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
           <Input placeholder="请输入电话号码" />
         )} 
       </FormItem>
-      <FormItem label="qq号码">
+      <FormItem label="QQ号码">
         {getFieldDecorator('qq', {
           initialValue: userInfo.qq,
+          rules: [{
+            validator(rule, value, callback) {
+              const phone = form.getFieldValue('phone');
+              const wechat = form.getFieldValue('wechat');
+              if (value || phone || wechat) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
-          <Input placeholder="请输入qq号码" />
+          <Input placeholder="请输入QQ号码" />
         )}
       </FormItem>
       <FormItem label="微信号码">
         {getFieldDecorator('wechat', {
           initialValue: userInfo.wechat,
+          rules: [{
+            validator(rule, value, callback) {
+              const phone = form.getFieldValue('phone');
+              const qq = form.getFieldValue('qq');
+              if (value || qq || phone) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
           <Input placeholder="请输入微信号码" />
         )}

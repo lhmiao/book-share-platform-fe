@@ -5,7 +5,9 @@ const { Item: FormItem } = Form;
 const { Password } = Input;
 
 function RegisterForm(props) {
-  const { getFieldDecorator } = props.form;
+  const { form } = props;
+  const { getFieldDecorator } = form;
+
   return (
     <Fragment>
       <FormItem>
@@ -43,6 +45,17 @@ function RegisterForm(props) {
       <FormItem>
         {getFieldDecorator('phone', {
           initialValue: '',
+          rules: [{
+            validator(rule, value, callback) {
+              const qq = form.getFieldValue('qq');
+              const wechat = form.getFieldValue('wechat');
+              if (value || qq || wechat) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
           <Input placeholder="请输入电话号码" />
         )}
@@ -50,13 +63,35 @@ function RegisterForm(props) {
       <FormItem>
         {getFieldDecorator('qq', {
           initialValue: '',
+          rules: [{
+            validator(rule, value, callback) {
+              const phone = form.getFieldValue('phone');
+              const wechat = form.getFieldValue('wechat');
+              if (value || phone || wechat) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
-          <Input placeholder="请输入 qq 号码" />
+          <Input placeholder="请输入QQ号码" />
         )}
       </FormItem>
       <FormItem>
         {getFieldDecorator('wechat', {
           initialValue: '',
+          rules: [{
+            validator(rule, value, callback) {
+              const phone = form.getFieldValue('phone');
+              const qq = form.getFieldValue('qq');
+              if (value || qq || phone) {
+                callback();
+                return;
+              }
+              callback('电话号码、QQ号码、微信号码至少填一个');
+            },
+          }],
         })(
           <Input placeholder="请输入微信号码" />
         )}
