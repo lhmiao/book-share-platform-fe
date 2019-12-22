@@ -37,7 +37,8 @@ export default class Home extends PureComponent {
   parseParamsFromURL() {
     const { location } = this.props;
     const { 
-      page = 1, pageSize = 10, bookName = '', onlyOnSell = 0 } = queryString.parse(location.search);
+      page = 1, pageSize = 10, bookName = '', onlyOnSell = 0,
+    } = queryString.parse(location.search);
     const params = {
       page: Number(page),
       pageSize: Number(pageSize),
