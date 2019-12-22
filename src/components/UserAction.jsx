@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { Avatar, Menu, Dropdown, Icon, message } from 'antd';
+import { Avatar, Menu, Dropdown, Icon, message, Tooltip } from 'antd';
 import * as api from 'apis/user';
-import { clearUserInfo } from 'actions/user';
+import { setUserInfo, clearUserInfo } from 'actions/user';
 import { HOME_PATH } from '@/constant';
 
 const { Item: MenuItem } = Menu;
@@ -14,9 +14,9 @@ const iconStyle = {
 };
 
 function UserAction(props) {
-  const { userInfo, clearUserInfo, history } = props;
+  const { loginUser, setUserInfo, clearUserInfo, history } = props;
 
-  if (!userInfo) return null;
+  if (!loginUser) return null;
 
   async function logout() {
     try {
@@ -33,15 +33,31 @@ function UserAction(props) {
     history.push('/user');
   }
 
+  async function refreshLoginUserInfo(e) {
+    try {
+      e.stopPropagation();
+      const userInfo = await api.checkLogin();
+      setUserInfo(userInfo);
+      message.success('已刷新图书币余额');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const menu = (
     <Menu>
       <MenuItem onClick={toUserInfoPage}>
         <Icon type="idcard" style={iconStyle} />
         我的信息
       </MenuItem>
-      <MenuItem>
-        <Icon type="pay-circle" style={iconStyle} />
-        图书币余额：{userInfo.coinNumber}
+      <MenuItem onClickCapture={refreshLoginUserInfo}>
+        <Tooltip
+          title="点击可刷新图书币余额"
+          placement="left"
+        >
+          <Icon type="pay-circle" style={{ marginRight: 8, ...iconStyle }} />
+          图书币余额：{loginUser.coinNumber}
+        </Tooltip>
       </MenuItem>
       <MenuItem onClick={logout}>
         <Icon type="logout" style={iconStyle} />
@@ -62,8 +78,9 @@ function UserAction(props) {
 
 export default compose(
   connect(
-    state => ({ userInfo: state.user }),
+    state => ({ loginUser: state.user }),
     dispatch => ({
+      setUserInfo: bindActionCreators(setUserInfo, dispatch),
       clearUserInfo: bindActionCreators(clearUserInfo, dispatch),
     })
   ),
