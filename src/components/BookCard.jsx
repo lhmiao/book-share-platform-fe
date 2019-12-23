@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { Card, Typography, Tooltip, Icon, Modal, message } from 'antd';
 import { css } from 'emotion';
-import { Link } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import UserContactPopover from 'components/UserContactPopover';
 import { getBookPreviewSrc, noop } from '@/utils';
 import BookPrice from 'components/BookPrice';
@@ -27,7 +28,7 @@ const bookCardDefaultClass = css`
 function BookCard(props) {
   const {
     loginUser, id, bookName, intro, author, price, className, style, keeper,
-    onSell, showActions, refresh, ...restProps
+    onSell, showActions, refresh, history, ...restProps
   } = props;
 
   const buyBook = async () => {
@@ -62,6 +63,14 @@ function BookCard(props) {
     });
   };
 
+  const toBookDetailPage = () => {
+    if (!loginUser) {
+      message.info('请先登录');
+      return;
+    }
+    history.push(`/book/${id}`);
+  };
+
   const description = (
     <Fragment>
       <div className="book-author">
@@ -92,9 +101,10 @@ function BookCard(props) {
 
   const detailInfo = (
     <Tooltip title="查看详情">
-      <Link to={`/book/${id}`}>
-        <Icon type="file-text" />
-      </Link>
+      <Icon
+        type="file-text"
+        onClick={toBookDetailPage}
+      />
     </Tooltip>
   );
 
@@ -128,4 +138,7 @@ BookCard.defaultProps = {
   refresh: noop,
 };
 
-export default connect(state => ({ loginUser: state.user }))(BookCard);
+export default compose(
+  connect(state => ({ loginUser: state.user })),
+  withRouter,
+)(BookCard);
