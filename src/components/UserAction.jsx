@@ -33,6 +33,10 @@ function UserAction(props) {
     history.push('/user');
   }
 
+  function toMyBookPage() {
+    history.push('/my_book');
+  }
+
   async function refreshLoginUserInfo(e) {
     try {
       e.stopPropagation();
@@ -49,6 +53,10 @@ function UserAction(props) {
       <MenuItem onClick={toUserInfoPage}>
         <Icon type="idcard" style={iconStyle} />
         我的信息
+      </MenuItem>
+      <MenuItem onClick={toMyBookPage}>
+        <Icon type="book" style={iconStyle} />
+        我的图书
       </MenuItem>
       <MenuItem onClickCapture={refreshLoginUserInfo}>
         <Tooltip

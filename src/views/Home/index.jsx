@@ -1,8 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
 import queryString from 'query-string';
+import { Divider } from 'antd';
 import * as api from 'apis/book';
-import Filter from './components/Filter';
+import { noop } from '@/utils';
 import BookList from 'components/BookList';
+import Filter from './components/Filter';
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -56,7 +58,7 @@ export default class Home extends PureComponent {
 
   onParamsChange = (subChangeParams, needFetchBookList = false) => {
     const params = { ...this.state.params, ...subChangeParams };
-    const effect = needFetchBookList ? this.fetchBookList : () => {};
+    const effect = needFetchBookList ? this.fetchBookList : noop;
     this.setState({ params }, effect);
   }
 
@@ -66,6 +68,8 @@ export default class Home extends PureComponent {
     const { history } = this.props;
     const { params, bookList, total, loading } = this.state;
 
+    const bookCardProps = { refresh: this.fetchBookList };
+
     return (
       <Fragment>
         <Filter
@@ -74,6 +78,7 @@ export default class Home extends PureComponent {
           onParamsChange={this.onParamsChange}
           fetchBookList={this.fetchBookList}
         />
+        <Divider />
         <BookList
           data={bookList}
           total={total}
@@ -81,7 +86,7 @@ export default class Home extends PureComponent {
           page={params.page}
           pageSize={params.pageSize}
           onPageChange={this.onPageChange}
-          style={{ marginTop: 24 }}
+          bookCardProps={bookCardProps}
         />
       </Fragment>
     );

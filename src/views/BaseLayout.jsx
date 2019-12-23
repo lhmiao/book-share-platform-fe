@@ -13,6 +13,7 @@ import User from './User';
 import Home from './Home';
 import CreateBook from './CreateBook';
 import BookDetail from './BookDetail';
+import MyBook from './MyBook';
 
 const { Content } = Layout;
 
@@ -90,11 +91,17 @@ export default class BaseLayout extends PureComponent {
                 exact
                 path="/book/create"
                 component={CreateBook}
-              /><Route
-              exact
-              path="/book/:bookId"
-              component={BookDetail}
-            />
+              />
+              <Route
+                exact
+                path="/book/:bookId"
+                component={BookDetail}
+              />
+              <Route
+                exact
+                path="/my_book"
+                component={MyBook}
+              />
             </Switch>
           </Container>
         </Content>
