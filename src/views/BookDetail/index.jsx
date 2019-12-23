@@ -1,11 +1,13 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { PageHeader, Skeleton, Divider, Button } from 'antd';
+import { PageHeader, Skeleton, Divider, Button, Modal, message } from 'antd';
 import * as api from 'apis/book';
 import UserContactPopover from 'components/UserContactPopover';
 import openRecordChainModal from 'components/RecordChain';
 import BookInfo from './components/BookInfo';
 import CommentList from './components/CommentList';
+
+const { confirm } = Modal;
 
 @connect(state => ({ loginUser: state.user }))
 export default class BookDetail extends PureComponent {
@@ -48,6 +50,41 @@ export default class BookDetail extends PureComponent {
     }
   }
 
+  buyBook = async () => {
+    try {
+      await api.buyBook(this.bookId);
+      message.success('购买成功');
+      this.fetchBookInfo();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  buyBookConfirm = () => {
+    const { loginUser } = this.props;
+    const { bookInfo } = this.state;
+
+    if (loginUser.id === bookInfo?.keeper?.id) {
+      message.info('你已拥有该图书');
+      return;
+    }
+
+    confirm({
+      title: '确认购买？',
+      content: (
+        <div>
+          确认以
+          <strong style={{ color: 'rgba(0, 0, 0, .85)' }}>「{bookInfo?.price}个图书币」</strong>
+          的价格购买
+          <strong style={{ color: 'rgba(0, 0, 0, .85)' }}>《{bookInfo?.bookName}》</strong>
+        </div>
+      ),
+      okText: '确认',
+      cancelText: '取消',
+      onOk: this.buyBook,
+    });
+  }
+
   getExtra() {
     const { bookInfo, bookRecordChain } = this.state;
 
@@ -68,6 +105,7 @@ export default class BookDetail extends PureComponent {
         <Button
           icon="shopping-cart"
           type="primary"
+          onClick={this.buyBookConfirm}
         >购买</Button>
       </Fragment>
     );
@@ -82,9 +120,10 @@ export default class BookDetail extends PureComponent {
         <PageHeader
           title={bookInfo ? bookInfo?.bookName : '图书详情'}
           onBack={() => history.goBack()}
-          style={{ padding: 0, marginBottom: 24 }}
+          style={{ padding: 0 }}
           extra={this.getExtra()}
         />
+        <Divider />
         <Skeleton
           active
           loading={loading}

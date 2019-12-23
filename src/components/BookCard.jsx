@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
-import { Card, Typography, Tooltip, Icon } from 'antd';
+import { Card, Typography, Tooltip, Icon, Modal, message } from 'antd';
 import { css } from 'emotion';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import UserContactPopover from 'components/UserContactPopover';
-import { getBookPreviewSrc } from '@/utils';
+import { getBookPreviewSrc, noop } from '@/utils';
 import BookPrice from 'components/BookPrice';
+import * as api from 'apis/book';
 
 const { Meta: CardMeta } = Card;
 const { Paragraph } = Typography;
+const { confirm } = Modal;
 
 const bookCardDefaultClass = css`
   .book-author {
@@ -21,11 +24,43 @@ const bookCardDefaultClass = css`
   }
 `;
 
-export default function BookCard(props) {
+function BookCard(props) {
   const {
-    id, bookName, intro, author, price, className, style, keeper,
-    onSell, showActions, ...restProps
+    loginUser, id, bookName, intro, author, price, className, style, keeper,
+    onSell, showActions, refresh, ...restProps
   } = props;
+
+  const buyBook = async () => {
+    try {
+      await api.buyBook(id);
+      message.success('购买成功');
+      refresh();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const buyBookConfirm = () => {
+    if (loginUser.id === keeper.id) {
+      message.info('你已拥有该图书');
+      return;
+    }
+
+    confirm({
+      title: '确认购买？',
+      content: (
+        <div>
+          确认以
+          <strong style={{ color: 'rgba(0, 0, 0, .85)' }}>「{price}个图书币」</strong>
+          的价格购买
+          <strong style={{ color: 'rgba(0, 0, 0, .85)' }}>《{bookName}》</strong>
+        </div>
+      ),
+      okText: '确认',
+      cancelText: '取消',
+      onOk: buyBook,
+    });
+  };
 
   const description = (
     <Fragment>
@@ -48,7 +83,10 @@ export default function BookCard(props) {
 
   const buyBtn = (
     <Tooltip title="购买">
-      <Icon type="shopping-cart" />
+      <Icon
+        type="shopping-cart"
+        onClick={buyBookConfirm}
+      />
     </Tooltip>
   );
 
@@ -68,7 +106,7 @@ export default function BookCard(props) {
       style={style}
       className={`${bookCardDefaultClass} ${className}`}
       cover={<img alt="图书预览图" src={bookPreviewSrc} />}
-      actions={showActions ? [sellerInfo, buyBtn, detailInfo] : null}
+      actions={[sellerInfo, buyBtn, detailInfo]}
       {...restProps}
     >
       <CardMeta
@@ -87,5 +125,7 @@ BookCard.defaultProps = {
   price: 0,
   keeper: {},
   onSell: false,
-  showActions: true,
+  refresh: noop,
 };
+
+export default connect(state => ({ loginUser: state.user }))(BookCard);
