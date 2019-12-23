@@ -31,7 +31,7 @@ export default class Client {
           const { useErrorTip = true } = config;
           if (useErrorTip) {
             if (RES_EXCEPTION_CODES.includes(data?.code)) {
-              notification.warning({ message: data?.message });
+              notification.info({ message: data?.message });
             } else {
               notification.error({
                 message: data?.code,
