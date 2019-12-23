@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { notification } from 'antd';
-import { getCsrfToken, isCsrfSafeMethod } from '../utils';
+import { getCsrfToken, isCsrfSafeMethod } from '@/utils';
+import { RES_EXCEPTION_CODES } from '@/constant';
 
 const clientOpts = {
   baseURL: '/api/v1',
@@ -26,17 +27,21 @@ export default class Client {
     client.interceptors.response.use(
       (res) => {
         const { data, config } = res;
-        if (data.code !== 0) {
+        if (data?.code !== 0) {
           const { useErrorTip = true } = config;
           if (useErrorTip) {
-            notification.error({
-              message: data.code,
-              description: data.message,
-            });
+            if (RES_EXCEPTION_CODES.includes(data?.code)) {
+              notification.warning({ message: data?.message });
+            } else {
+              notification.error({
+                message: data?.code,
+                description: data?.message,
+              });
+            }
           }
           return Promise.reject(data);
         }
-        return Promise.resolve(data.data);
+        return Promise.resolve(data?.data);
       },
       (error) => {
         const { response: { status, statusText }, config } = error;
