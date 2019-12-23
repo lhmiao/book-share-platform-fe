@@ -49,11 +49,15 @@ function RegisterForm(props) {
             validator(rule, value, callback) {
               const qq = form.getFieldValue('qq');
               const wechat = form.getFieldValue('wechat');
-              if (value || qq || wechat) {
-                callback();
+              if (!value && !qq && !wechat) {
+                callback('电话号码、QQ号码、微信号码至少填一个');
                 return;
               }
-              callback('电话号码、QQ号码、微信号码至少填一个');
+              if (value && !/^\d{11}$/.test(value)) {
+                callback('电话号码必须由11位数字组成');
+                return;
+              }
+              callback();
             },
           }],
         })(
