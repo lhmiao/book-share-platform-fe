@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { noop } from '@/utils';
 
 const Container = styled.div`
   img {
@@ -59,7 +60,7 @@ function PictureInput(props) {
 }
 
 PictureInput.defaultProps = {
-  onChange: () => {},
+  onChange: noop,
 };
 
 export default PictureInput;

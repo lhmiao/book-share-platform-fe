@@ -11,3 +11,5 @@ export const getCsrfToken = (key = 'csrfToken') => {
 export const isCsrfSafeMethod = method => /^(get|head|options|trace)$/.test(method.toLowerCase());
 
 export const getBookPreviewSrc = bookId => `/book/${bookId}/preview`;
+
+export const noop = () => {};
