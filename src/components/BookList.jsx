@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, Empty } from 'antd';
+import { Pagination, Empty, Card } from 'antd';
 import styled from '@emotion/styled';
 import BookCard from 'components/BookCard';
 import { noop } from '@/utils';
@@ -15,7 +15,7 @@ const Container = styled.div`
     }
 
     .book-list-card {
-      width: 250px;
+      width: 240px;
       margin: 10px;
     }
   }
@@ -30,20 +30,18 @@ export default function BookList(props) {
   const {
     data, total, page, pageSize, onPageChange, style,
     className, needPagination, bookCardProps,
-    // loading,
+    loading,
   } = props;
 
   
   const mapDataToCards = () => {
-    // if (loading) {
-    //   const cardStyle = { width: 250, margin: 10 };
+    if (loading) {
+      return Array
+        .from({ length: 10 })
+        .map(() => <Card className="book-list-card" loading={loading} />);
+    }
 
-    //   return Array
-    //     .from({ length: 10 })
-    //     .map(() => <Card style={cardStyle} loading={loading} />);
-    // }
-
-    if (!data.length) return <Empty />;
+    if (!data.length) return <Empty style={{ flex: 1, textAlign: 'center' }} />;
 
     return data.map(item => (
       <BookCard
