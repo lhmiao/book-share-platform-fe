@@ -23,7 +23,7 @@ function CreateBookForm(props) {
   const { getFieldDecorator } = form;
   return (
     <Fragment>
-      <FormItem label="预览图">
+      <FormItem label="预览图（为避免图片展示拉伸，推荐上传的图片长、宽一致）">
         {getFieldDecorator('preview', {
           initialValue: preview,
           rules: [{ required: true, message: '请上传预览图' }],

@@ -14,6 +14,16 @@ const { Paragraph } = Typography;
 const { confirm } = Modal;
 
 const bookCardDefaultClass = css`
+  .book-cover {
+    text-align: center;
+
+    .book-cover-preview {
+      width: 120px;
+      height: 120px;
+      margin: 24px 0;
+    }
+  }
+
   .book-author {
     margin-bottom: 8px;
     color: rgba(0, 0, 0, .65);
@@ -116,11 +126,12 @@ function BookCard(props) {
   const bookPreviewSrc = getBookPreviewSrc(id);
 
   const cover = (
-    <div style={{ textAlign: 'center' }}>
+    <div className="book-cover">
       <img
         alt="图书预览图"
         src={bookPreviewSrc}
-        style={{ width: 120, margin: '24px 0' }} />
+        className="book-cover-preview"
+      />
     </div>
   );
 
