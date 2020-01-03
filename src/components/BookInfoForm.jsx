@@ -8,7 +8,7 @@ const { Group: RadioGroup, Button: RadioButton } = Radio;
 
 function CreateBookForm(props) {
   const {
-    isEdit, form, bookName, intro, price, onSell, previewSrc,
+    isEdit, form, bookName, intro, price, onSell, preview,
     author,
   } = props;
 
@@ -25,7 +25,7 @@ function CreateBookForm(props) {
     <Fragment>
       <FormItem label="预览图">
         {getFieldDecorator('preview', {
-          initialValue: previewSrc,
+          initialValue: preview,
           rules: [{ required: true, message: '请上传预览图' }],
         })(
           <PictureInput />
