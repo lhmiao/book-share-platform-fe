@@ -64,7 +64,7 @@ export default class BookDetail extends PureComponent {
     const { loginUser } = this.props;
     const { bookInfo } = this.state;
 
-    if (loginUser.id === bookInfo?.keeper?.id) {
+    if (loginUser?.id === bookInfo?.keeper?.id) {
       message.info('你已拥有该图书');
       return;
     }
@@ -86,16 +86,26 @@ export default class BookDetail extends PureComponent {
   }
 
   getExtra() {
+    const { loginUser, history } = this.props;
     const { bookInfo, bookRecordChain } = this.state;
 
     if (!bookInfo) return null;
 
+    const { keeper } = bookInfo;
+
+    const toEditBookPage = () => history.push(`/book/edit/${bookInfo?.id}`);
+
     return (
       <Fragment>
+        {loginUser?.id === keeper?.id && (
+          <Button
+            onClick={toEditBookPage}
+          >修改图书信息</Button>
+        )}
         <UserContactPopover
-          {...bookInfo?.keeper}
+          {...keeper}
           placement="left"
-          title={bookInfo?.keeper?.username}
+          title={keeper?.username}
         >
           <Button>联系卖家</Button>
         </UserContactPopover>
