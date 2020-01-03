@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { noop } from '@/utils';
 
@@ -36,12 +36,21 @@ function PictureInput(props) {
   const { value, onChange } = props;
   const [fileSrc, setFileSrc] = useState(value);
 
+  useEffect(() => {
+    URL.revokeObjectURL(fileSrc);
+    if (value instanceof Blob) {
+      const src = URL.createObjectURL(value);
+      setFileSrc(src);
+    } else {
+      setFileSrc(value);
+    }
+  }, [value]); // eslint-disable-line
+
   function handleChange(e) {
     const file = e.target.files[0];
     if (!file) return;
     onChange(file);
-    const src = URL.createObjectURL(file);
-    setFileSrc(src);
+    e.target.value = '';
   }
 
   return (
