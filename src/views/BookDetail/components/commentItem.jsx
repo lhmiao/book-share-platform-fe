@@ -26,6 +26,7 @@ export default class CommentItem extends PureComponent {
       const { id, refresh } = this.props;
       await api.updateBookComment(id, newContent);
       message.success('修改成功');
+      this.setState({ isEdit: false });
       refresh();
     } catch (error) {
       console.error(error);
