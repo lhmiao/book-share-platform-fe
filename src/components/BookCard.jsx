@@ -42,7 +42,12 @@ function BookCard(props) {
   };
 
   const buyBookConfirm = () => {
-    if (loginUser.id === keeper.id) {
+    if (!loginUser) {
+      message.info('请先登录');
+      return;
+    }
+
+    if (loginUser?.id === keeper?.id) {
       message.info('你已拥有该图书');
       return;
     }
@@ -110,13 +115,23 @@ function BookCard(props) {
 
   const bookPreviewSrc = getBookPreviewSrc(id);
 
+  const cover = (
+    <div style={{ textAlign: 'center' }}>
+      <img
+        alt="图书预览图"
+        src={bookPreviewSrc}
+        style={{ width: 120, margin: '24px 0' }} />
+    </div>
+  );
+
   return (
     <Card
       hoverable
       style={style}
       className={`${bookCardDefaultClass} ${className}`}
-      cover={<img alt="图书预览图" src={bookPreviewSrc} />}
+      cover={cover}
       actions={[sellerInfo, buyBtn, detailInfo]}
+      onClick={toBookDetailPage}
       {...restProps}
     >
       <CardMeta
