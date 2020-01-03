@@ -14,6 +14,12 @@ export function createBook(params) {
   return client.post(url, params, { useFormData: true });
 }
 
+// 修改图书信息
+export function editBook(bookId, params) {
+  const url = `/book/${bookId}`;
+  return client.put(url, params, { useFormData: true });
+}
+
 // 获取图书信息
 export function fetchBookInfo(bookId) {
   const url = `/book/${bookId}`;

@@ -12,6 +12,7 @@ import { HOME_PATH } from '@/constant';
 import User from './User';
 import Home from './Home';
 import CreateBook from './CreateBook';
+import EditBook from './EditBook';
 import BookDetail from './BookDetail';
 import MyBook from './MyBook';
 
@@ -91,6 +92,11 @@ export default class BaseLayout extends PureComponent {
                 exact
                 path="/book/create"
                 component={CreateBook}
+              />
+              <Route
+                exact
+                path="/book/edit/:bookId"
+                component={EditBook}
               />
               <Route
                 exact
